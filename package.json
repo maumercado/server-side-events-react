@@ -50,9 +50,8 @@
         "redis": "^2.8.0"
     },
     "devDependencies": {
-        "babel-eslint": "^10.0.1",
+        "eslint": "^5.6.0",
         "jest": "^23.6.0",
-        "prettier-eslint": "^8.8.2",
         "supertest": "^3.3.0"
     }
 }
