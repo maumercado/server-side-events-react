@@ -66,29 +66,18 @@ module.exports = {
         "valid-typeof": "error",
         "no-whitespace-before-property": "error",
         "object-shorthand": "error",
-        "object-curly-spacing": [
-            2,
-            "always",
-            { arraysInObjects: true, objectsInObjects: true }
-        ],
+        "object-curly-spacing": [2, "always", { arraysInObjects: true, objectsInObjects: true }],
         "prefer-arrow-callback": "error",
         "prefer-const": "error",
         "prefer-template": "error",
         "quote-props": ["error", "as-needed"],
-        quotes: [
-            "error",
-            "double",
-            { avoidEscape: true, allowTemplateLiterals: true }
-        ],
+        quotes: ["error", "double", { avoidEscape: true, allowTemplateLiterals: true }],
         "require-yield": "error",
         semi: ["error", "always"],
         "space-before-blocks": "error",
-        "space-before-function-paren": [
-            "error",
-            { anonymous: "never", named: "never", asyncArrow: "always" }
-        ],
+        "space-before-function-paren": ["error", { anonymous: "never", named: "never", asyncArrow: "always" }],
         "brace-style": ["error", "1tbs"],
-        "max-len": ["error", 120, 4],
+        "max-len": ["error", 100, 4],
         "space-in-parens": "error",
         "space-infix-ops": "error",
         "space-unary-ops": "error",
