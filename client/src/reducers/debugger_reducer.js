@@ -46,6 +46,7 @@ export default (state = initialState, action) => {
             };
         }
         case DEBUGGER_RECEIVED_EVENT: {
+            debugger;
             const event = action.payload;
             let eventsToShow = [];
 
@@ -57,7 +58,7 @@ export default (state = initialState, action) => {
                 events.pop();
             }
 
-            eventsToShow = eventsToShow.concat([event, ...events]);
+            eventsToShow = eventsToShow.concat([ event, ...events ]);
             return {
                 ...state,
                 events: eventsToShow.slice(0, MAX_EVENTS_TO_SHOW)

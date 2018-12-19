@@ -1,8 +1,4 @@
-import {
-    DEBUGGER_RECEIVED_EVENT,
-    DEBUGGER_LOADED,
-    DEBUGGER_INIT_ERROR
-} from "./types";
+import { DEBUGGER_RECEIVED_EVENT, DEBUGGER_LOADED, DEBUGGER_INIT_ERROR } from "./types";
 
 let sse = null;
 export const debuggerInit = () => async dispatch => {
@@ -25,7 +21,5 @@ export const debuggerInit = () => async dispatch => {
         });
     });
 
-    sse.addEventListener("error", () =>
-        dispatch({ type: DEBUGGER_INIT_ERROR })
-    );
+    sse.addEventListener("error", () => dispatch({ type: DEBUGGER_INIT_ERROR }));
 };

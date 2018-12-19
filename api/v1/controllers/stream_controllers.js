@@ -1,4 +1,5 @@
 const EventEmitter = require("events");
+const Event = require("../../models/event");
 const config = require("../../../config");
 
 const Stream = new EventEmitter();
@@ -40,12 +41,14 @@ const read = async (req, res, next) => {
      *
      * Callback for push events
      */
-    const sendData = (event, data) => {
+    const sendData = (eventString, data, isEvent = false) => {
         const dataJSON = JSON.parse(data);
+        const event = new Event(dataJSON);
+
         const { type, messageId, context, receivedAt, sentAt, userId, anonymousId } = dataJSON;
         log.info(
             {
-                event,
+                emit: eventString,
                 type,
                 messageId,
                 context,
@@ -57,7 +60,17 @@ const read = async (req, res, next) => {
             "Sending event to client"
         );
 
-        res.write(`event: ${String(event)}\n` + `data: ${data}\n\n`);
+        if (isEvent) {
+            try {
+                event.process();
+                event.validate();
+            } catch (err) {
+                log.error(err, `${err.context} Will ignore event!`);
+                return;
+            }
+        }
+
+        res.write(`event: ${String(eventString)}\n` + `data: ${event.JSONString()}\n\n`);
     };
     /**
      * Create listener for push events
@@ -72,7 +85,7 @@ const read = async (req, res, next) => {
 
     redisSub.on("message", (channel, message) => {
         log.info(`sub channel ${channel}: ${message}`);
-        Stream.emit("push", "event", message);
+        Stream.emit("push", "event", message, true);
     });
 
     try {
