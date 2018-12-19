@@ -17,7 +17,7 @@ describe("#### API Heartbeat ####", () => {
         API.close(done);
     });
 
-    test("It should respond with 200 for GET /ping method", done => {
+    test("It should respond with 200 for GET /ping", done => {
         return request(API)
             .get("/ping")
             .expect(200)
