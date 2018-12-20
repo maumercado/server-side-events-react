@@ -1,26 +1,25 @@
-const EventEmitter = require("events");
 const Event = require("../../models/event");
+const { subscribe, closeRedisConnection } = require("../../initializers");
 const config = require("../../../config");
 
-const Stream = new EventEmitter();
-
 const read = async (req, res, next) => {
+    let redisClient = null;
     const log = req.log.child({
         ctrl: "stream controller",
         ctrlFunction: "read"
     });
 
-    const redisSub = req.redisClient;
-
-    /**
-     * First send history of saved events (saved somewhere),
-     * on request get those events and send them to the
-     * client as stored-events once all these events have passed
-     * send an event to the client from the server
-     * called finished-historical or done-history
-     * then start pushing new events through another
-     * event called "push"
-     */
+    req.on("close", async () => {
+        if (!res.finished) {
+            log.warn("Client closed connection to read stream");
+            try {
+                await closeRedisConnection(redisClient);
+            } catch (err) {
+                log.warn(err, "Redis connection not shutdown properly");
+            }
+            res.end();
+        }
+    });
 
     res.writeHead(200, {
         "Content-Type": "text/event-stream",
@@ -28,72 +27,43 @@ const read = async (req, res, next) => {
         Connection: "keep-alive"
     });
 
-    req.on("close", () => {
-        Stream.removeAllListeners("push");
-        res.end();
-        log.info("Client closed connection to read stream");
-    });
-
     /**
      *
      * @param event type of event received
-     * @param data JSON object to send to server
+     * @param data JSON stringify object to send to server
      *
      * Callback for push events
      */
-    const sendData = (eventString, data, isEvent = false) => {
-        const dataJSON = JSON.parse(data);
-        const event = new Event(dataJSON);
-
-        const { type, messageId, context, receivedAt, sentAt, userId, anonymousId } = dataJSON;
-        log.info(
-            {
-                emit: eventString,
-                type,
-                messageId,
-                context,
-                receivedAt,
-                sentAt,
-                userId,
-                anonymousId
-            },
-            "Sending event to client"
-        );
-
-        if (isEvent) {
-            try {
-                event.process();
-                event.validate();
-            } catch (err) {
-                log.error(err, `${err.context} Will ignore event!`);
-                return;
-            }
+    const sendData = (eventString, data) => {
+        if (!res.finished) {
+            res.write(`event: ${String(eventString)}\n` + `data: ${data}\n\n`);
         }
-
-        res.write(`event: ${String(eventString)}\n` + `data: ${event.JSONString()}\n\n`);
     };
-    /**
-     * Create listener for push events
-     */
-    Stream.on("push", sendData);
-    Stream.on("loaded", sendData);
-
-    redisSub.on("subscribe", (channel, count) => {
-        log.info({ channel }, "Redis subscription ready");
-        Stream.emit("loaded", "loaded", JSON.stringify({ done: true }));
-    });
-
-    redisSub.on("message", (channel, message) => {
-        log.info(`sub channel ${channel}: ${message}`);
-        Stream.emit("push", "event", message, true);
-    });
 
     try {
-        await redisSub.subscribe(config.api.redis.channel);
+        const subscriptionCb = (channel, count) => {
+            log.info({ channel }, "Redis subscription ready");
+            sendData("loaded", JSON.stringify({ done: true }));
+        };
+
+        const messageCb = (channel, message) => {
+            try {
+                const dataJSON = JSON.parse(message);
+                const event = new Event(dataJSON);
+                const { type, id, receivedAt } = event;
+                log.info({ emit: "event", id, type, receivedAt }, "Sending event to client");
+                sendData("event", event.JSONString());
+            } catch (err) {
+                // This could go into a queue for erroneous events
+                log.warn({ err, message }, "Ignoring event");
+            }
+        };
+
+        redisClient = subscribe(messageCb, subscriptionCb);
     } catch (err) {
         log.error(err, `Error subscribing to ${config.api.redis.channel}`);
         next(err);
     }
 };
 
-module.exports = read;
+module.exports = { read };

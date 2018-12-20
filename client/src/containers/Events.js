@@ -2,19 +2,14 @@ import React, { Component } from "react";
 import { Table, Spinner, Alert } from "evergreen-ui";
 import { connect } from "react-redux";
 import Event from "../components/Event";
-import { debuggerInit } from "../actions";
+import * as actions from "../actions";
 class Events extends Component {
     componentDidMount() {
         this.props.debuggerInit();
     }
 
     renderError = () => {
-        return (
-            <Alert
-                intent="danger"
-                title="Hrm something is wrong, check your connections!"
-            />
-        );
+        return <Alert intent="danger" title="Hrm something is wrong, check your connections!" />;
     };
     renderEvents = () => {
         if (this.props.isLoading && this.props.events.length < 1) {
@@ -46,5 +41,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { debuggerInit }
+    actions
 )(Events);

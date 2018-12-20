@@ -46,8 +46,7 @@ export default (state = initialState, action) => {
             };
         }
         case DEBUGGER_RECEIVED_EVENT: {
-            debugger;
-            const event = action.payload;
+            const event = JSON.parse(action.payload);
             let eventsToShow = [];
 
             if (isPaused) {

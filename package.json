@@ -33,12 +33,12 @@
         "testRegex": "/__tests__/.*\\.js$",
         "collectCoverage": true,
         "testPathIgnorePatterns": [
+            "/client/",
             "/node_modules/"
         ]
     },
     "dependencies": {
         "@segment/loosely-validate-event": "^2.0.0",
-        "async-redis": "^1.1.4",
         "bunyan": "^1.8.12",
         "concurrently": "^4.1.0",
         "cors": "^2.8.5",

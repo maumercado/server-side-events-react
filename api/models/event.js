@@ -13,6 +13,8 @@ class Event {
         this.type = options.type;
         this.time = time;
         this.description = null;
+        this.process();
+        this.validate();
     }
 
     validate() {

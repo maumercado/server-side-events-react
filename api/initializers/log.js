@@ -9,4 +9,4 @@ const log = bunyan.createLogger({
     commit: `Deployed: ${git.short()} - ${git.branch()}`
 });
 
-exports.log = log;
+module.exports = { log };
