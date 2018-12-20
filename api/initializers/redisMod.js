@@ -1,7 +1,7 @@
 const assert = require("assert");
 const redis = require("redis");
 const { log } = require("./log");
-const config = require("../../config");
+const { config } = require("../../config");
 const childLog = log.child({ module: "Redis Module" });
 
 const MAX_RETRIES = 50;
@@ -35,7 +35,7 @@ const retryStrategy = options => {
  * @param {*} mCB - Callback for subscriber "message" event
  * @param {*} [sCB] - Callback for subscriber "subscribe" event
  */
-const subscribe = (mCB, sCB) => {
+const subscribeToDataMachine = (mCB, sCB) => {
     const subscriber = redis.createClient(config.api.redis);
     assert(subscriber instanceof redis.RedisClient, "client must be an instance of redis client");
     assert(typeof mCB === "function", `callback must be a function, received: ${typeof mCB}`);
@@ -64,6 +64,6 @@ const closeRedisConnection = subscriber => {
 
 module.exports = {
     retryStrategy,
-    subscribe,
+    subscribeToDataMachine,
     closeRedisConnection
 };

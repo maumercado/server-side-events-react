@@ -1,6 +1,6 @@
 const port = parseInt(process.env.SERVER_PORT, 10) || 4000;
 const _ = require("lodash");
-const { retryStrategy } = require("../api/initializers");
+const redisMod = require("../api/initializers");
 
 let config = {
     api: {
@@ -15,7 +15,7 @@ let config = {
             port: parseInt(process.env.REDIS_PORT, 10) || 6379,
             db: parseInt(process.env.REDIS_DB, 10) || 0,
             channel: process.env.REDIS_CHANNEL || "events",
-            retry_strategy: retryStrategy
+            retry_strategy: redisMod.retryStrategy
         }
     },
     client: {
@@ -34,4 +34,4 @@ switch (process.env.NODE_ENV) {
         break;
 }
 
-module.exports = config;
+module.exports = { config };

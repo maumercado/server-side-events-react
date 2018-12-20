@@ -8,4 +8,4 @@ fs.readdirSync(__dirname)
         controllers[file.split("_")[0]] = require(`./${file}`);
     });
 
-module.exports = controllers;
+module.exports = { controllers };

@@ -1,9 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-const streamRouter = require("../v1/routes").stream;
+const { config } = require("../../config");
 
-const startServer = async config => {
-    const { log } = require("../initializers");
+const startServer = () => {
+    const { log } = require("./");
+    const { stream } = require("../v1/routes").routes;
     const api = express();
     const childLog = log.child({ module: "startServer" });
     /**
@@ -25,7 +26,7 @@ const startServer = async config => {
     /**
      * Routes registration
      */
-    api.use("/v1", streamRouter);
+    api.use("/v1", stream.loadRoutes());
 
     const API = api.listen(config.api.server.port, () =>
         childLog.info({ config: config.api }, `Http server initialized ${config.api.server.port}`)

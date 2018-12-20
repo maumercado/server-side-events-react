@@ -1,13 +1,12 @@
-const { startServer, log } = require("./api/initializers");
-const config = require("./config");
-
-const initialize = async () => {
+const initialize = () => {
+    const { startServer, log } = require("./api/initializers");
     const childLog = log.child({ module: "API Initializer" });
+    log.info("Starting Server");
     try {
         /**
          * Start API
          */
-        await startServer(config);
+        startServer();
 
         // End
     } catch (err) {

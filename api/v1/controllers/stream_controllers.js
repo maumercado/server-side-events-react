@@ -1,8 +1,10 @@
-const Event = require("../../models/event");
-const { subscribe, closeRedisConnection } = require("../../initializers");
-const config = require("../../../config");
+const { Event } = require("../../models/event");
+const { config } = require("../../../config");
+const { redisMod } = require("../../initializers");
 
-const read = async (req, res, next) => {
+const { subscribeToDataMachine, closeRedisConnection } = redisMod;
+
+const readStream = async (req, res, next) => {
     let redisClient = null;
     const log = req.log.child({
         ctrl: "stream controller",
@@ -59,11 +61,11 @@ const read = async (req, res, next) => {
             }
         };
 
-        redisClient = subscribe(messageCb, subscriptionCb);
+        redisClient = subscribeToDataMachine(messageCb, subscriptionCb);
     } catch (err) {
         log.error(err, `Error subscribing to ${config.api.redis.channel}`);
         next(err);
     }
 };
 
-module.exports = { read };
+module.exports = { readStream };

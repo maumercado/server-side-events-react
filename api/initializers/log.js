@@ -1,5 +1,5 @@
 const bunyan = require("bunyan");
-const config = require("../../config");
+const { config } = require("../../config");
 const git = require("git-rev-sync");
 
 const log = bunyan.createLogger({

@@ -73,4 +73,4 @@ const eventTitle = event => {
     }
 };
 
-module.exports = Event;
+module.exports = { Event };
