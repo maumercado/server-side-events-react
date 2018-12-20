@@ -11,17 +11,14 @@ const logger = createLogger({
 });
 
 const enhancers = [];
-const middleware = [thunk];
+const middleware = [ thunk ];
 
 if (process.env.NODE_ENV !== "production") {
     middleware.push(logger);
 }
 
 const initialState = {};
-const composedEnhancers = composeWithDevTools(
-    applyMiddleware(...middleware),
-    ...enhancers
-);
+const composedEnhancers = composeWithDevTools(applyMiddleware(...middleware), ...enhancers);
 const store = createStore(rootReducer, initialState, composedEnhancers);
 
 if (module.hot) {
