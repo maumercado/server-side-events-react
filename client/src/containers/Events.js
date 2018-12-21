@@ -16,12 +16,12 @@ class Events extends Component {
             return <Spinner />;
         } else {
             const eventResults = this.props.events.map((event, i) => {
-                return <Event key={i} event={event} />;
+                return <Event key={event.id} event={event} />;
             });
 
             return (
                 <Table>
-                    <Table.Body height={240}>{eventResults}</Table.Body>
+                    <Table.Body height={640}>{eventResults}</Table.Body>
                 </Table>
             );
         }
