@@ -1,4 +1,9 @@
-import { DEBUGGER_RECEIVED_EVENT, DEBUGGER_LOADED, DEBUGGER_INIT_ERROR } from "./types";
+import {
+    DEBUGGER_RECEIVED_EVENT,
+    DEBUGGER_LOADED,
+    DEBUGGER_INIT_ERROR,
+    DEBUGGER_SEARCH
+} from "./types";
 
 let sse = null;
 
@@ -23,4 +28,8 @@ export const debuggerInit = () => dispatch => {
     });
 
     sse.addEventListener("error", () => dispatch({ type: DEBUGGER_INIT_ERROR }));
+};
+
+export const debuggerSearch = query => dispatch => {
+    dispatch({ type: DEBUGGER_SEARCH, payload: query });
 };

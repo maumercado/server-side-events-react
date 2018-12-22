@@ -2,7 +2,7 @@ import React from "react";
 import { Table } from "evergreen-ui";
 import moment from "moment";
 
-const Event = ({ event }) => {
+const EventListItem = ({ event, selectedEvent }) => {
     return (
         <Table.Row key={event.messageId} isSelectable onSelect={() => alert(event.messageId)}>
             <Table.TextCell flexBasis={120} flexShrink={0} flexGrow={0}>
@@ -16,4 +16,4 @@ const Event = ({ event }) => {
     );
 };
 
-export default Event;
+export default EventListItem;
