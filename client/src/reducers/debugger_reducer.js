@@ -2,15 +2,18 @@ import {
     DEBUGGER_RECEIVED_EVENT,
     DEBUGGER_INIT,
     DEBUGGER_LOADED,
-    DEBUGGER_PAUSED,
-    DEBUGGER_INIT_ERROR
+    DEBUGGER_PAUSE,
+    DEBUGGER_INIT_ERROR,
+    DEBUGGER_SEARCH,
+    DEBUGGER_RESUME
 } from "../actions/types";
 
 const initialState = {
     events: [],
     isPaused: false,
     isError: false,
-    isLoading: true
+    isLoading: true,
+    searchTerm: ""
 };
 
 const MAX_EVENTS_TO_SHOW = 100;
@@ -39,10 +42,16 @@ export default (state = initialState, action) => {
                 isError: false
             };
         }
-        case DEBUGGER_PAUSED: {
+        case DEBUGGER_PAUSE: {
             return {
                 ...state,
                 isPaused: true
+            };
+        }
+        case DEBUGGER_RESUME: {
+            return {
+                ...state,
+                isPaused: false
             };
         }
         case DEBUGGER_RECEIVED_EVENT: {
@@ -61,6 +70,13 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 events: eventsToShow.slice(0, MAX_EVENTS_TO_SHOW)
+            };
+        }
+
+        case DEBUGGER_SEARCH: {
+            return {
+                ...state,
+                searchTerm: action.payload
             };
         }
 
