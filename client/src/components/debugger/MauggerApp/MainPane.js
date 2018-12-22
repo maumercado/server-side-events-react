@@ -5,11 +5,16 @@ import EventList from "./EventList";
 
 class MainPane extends Component {
     render() {
-        const { events, handleSearch } = this.props;
+        const { onPlay, onPause, events, handleSearch, isPaused } = this.props;
 
         return (
             <Pane>
-                <Toolbar handleSearch={handleSearch} />
+                <Toolbar
+                    handleSearch={handleSearch}
+                    onPause={onPause}
+                    onPlay={onPlay}
+                    isPaused={isPaused}
+                />
                 <EventList events={events} />
             </Pane>
         );

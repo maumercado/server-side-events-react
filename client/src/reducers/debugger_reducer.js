@@ -2,9 +2,10 @@ import {
     DEBUGGER_RECEIVED_EVENT,
     DEBUGGER_INIT,
     DEBUGGER_LOADED,
-    DEBUGGER_PAUSED,
+    DEBUGGER_PAUSE,
     DEBUGGER_INIT_ERROR,
-    DEBUGGER_SEARCH
+    DEBUGGER_SEARCH,
+    DEBUGGER_RESUME
 } from "../actions/types";
 
 const initialState = {
@@ -41,10 +42,16 @@ export default (state = initialState, action) => {
                 isError: false
             };
         }
-        case DEBUGGER_PAUSED: {
+        case DEBUGGER_PAUSE: {
             return {
                 ...state,
                 isPaused: true
+            };
+        }
+        case DEBUGGER_RESUME: {
+            return {
+                ...state,
+                isPaused: false
             };
         }
         case DEBUGGER_RECEIVED_EVENT: {

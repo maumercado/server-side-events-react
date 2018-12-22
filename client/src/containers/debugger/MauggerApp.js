@@ -47,6 +47,14 @@ class MauggerApp extends Component {
         searchFn(query);
     };
 
+    onPause = () => {
+        this.props.debuggerPause();
+    };
+
+    onPlay = () => {
+        this.props.debuggerPlay();
+    };
+
     /**
      * Custom Render Methods and Render
      */
@@ -66,16 +74,19 @@ class MauggerApp extends Component {
                 events={this.props.events}
                 eventsCount={this.props.eventsCount}
                 handleSearch={this.handleSearch}
+                onPause={this.onPause}
+                onPlay={this.onPlay}
+                isPaused={this.props.isPaused}
             />
         );
     }
 }
 
 const mapStateToProps = state => {
-    const { isLoading, events, isError, searchTerm } = state.debugger;
+    const { isLoading, events, isError, searchTerm, isPaused } = state.debugger;
     const filteredEvents = filterEvents(events, searchTerm);
 
-    return { isLoading, events: filteredEvents, isError, eventsCount: events.length };
+    return { isLoading, events: filteredEvents, isError, eventsCount: events.length, isPaused };
 };
 
 export default connect(
