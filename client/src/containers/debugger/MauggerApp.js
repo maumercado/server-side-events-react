@@ -75,11 +75,11 @@ class MauggerApp extends Component {
     };
 
     render() {
-        if (this.props.isLoading) {
+        if (this.props.isLoading && !this.props.isError) {
             return <Spinner />;
         }
         return (
-            <Pane>
+            <Pane backgroundColor="#f1f1f1">
                 {this.renderError()}
                 <Maugger
                     events={this.props.events}

@@ -9,7 +9,7 @@ class SearchBar extends Component {
 
     onPauseLive = value => {
         const { onPlay, onPause } = this.props;
-        console.log(value);
+
         if (value === "live") {
             onPlay();
         }
@@ -30,6 +30,7 @@ class SearchBar extends Component {
                 alignItems="center"
                 alignContent="space-around"
                 justifyContent="flex-start"
+                backgroundColor="#f1f1f1"
             >
                 <SegmentedControl
                     margin={8}
