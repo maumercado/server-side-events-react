@@ -18,8 +18,8 @@
         "redux-thunk": "^2.3.0"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "CI=true react-scripts build",
+        "start": "REACT_APP_CONFIG=`node ../config` react-scripts start",
+        "build": "CI=true REACT_APP_CONFIG={{{config}}} react-scripts build",
         "test": "CI=true react-scripts test",
         "test:debug": "react-scripts --inspect-brk test --runInBand",
         "eject": "react-scripts eject"

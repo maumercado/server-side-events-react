@@ -14,7 +14,7 @@ export const debuggerInit = () => dispatch => {
         throw new Error("SSE connection already exists?");
     }
 
-    sse = new EventSource("http://localhost:4000/v1/stream");
+    sse = new EventSource(`${window.config.server}/v1/stream`);
 
     sse.addEventListener("event", e => {
         dispatch({

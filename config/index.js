@@ -1,6 +1,6 @@
 const port = parseInt(process.env.SERVER_PORT, 10) || 4000;
 const _ = require("lodash");
-const redisMod = require("../api/initializers");
+const redisMod = require("../api/initializers/redisMod");
 
 let config = {
     api: {
@@ -19,7 +19,7 @@ let config = {
         }
     },
     client: {
-        server: process.env.SERVER_URL || `localhost:${port}`
+        server: process.env.SERVER_URL || `http://localhost:${port}`
     }
 };
 
@@ -32,6 +32,10 @@ switch (process.env.NODE_ENV) {
         break;
     default:
         break;
+}
+
+if (require.main === module) {
+    console.log(config.client);
 }
 
 module.exports = { config };
