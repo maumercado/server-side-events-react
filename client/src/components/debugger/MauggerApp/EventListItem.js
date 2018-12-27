@@ -2,10 +2,10 @@ import React from "react";
 import { Table } from "evergreen-ui";
 import moment from "moment";
 
-const EventListItem = ({ event, selectedEvent }) => {
+const EventListItem = ({ event, onEventSelect }) => {
     return (
-        <Table.Row key={event.messageId} isSelectable onSelect={() => alert(event.messageId)}>
-            <Table.TextCell flexBasis={120} flexShrink={0} flexGrow={0}>
+        <Table.Row isSelectable onSelect={() => onEventSelect(event)}>
+            <Table.TextCell flexBasis={120} flexShrink={1} flexGrow={1}>
                 {event.type.toUpperCase()}
             </Table.TextCell>
             <Table.TextCell>{event.description}</Table.TextCell>

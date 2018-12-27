@@ -4,7 +4,8 @@ import {
     DEBUGGER_INIT_ERROR,
     DEBUGGER_SEARCH,
     DEBUGGER_PAUSE,
-    DEBUGGER_RESUME
+    DEBUGGER_RESUME,
+    DEBUGGER_EVENT_SELECTED
 } from "./types";
 
 let sse = null;
@@ -42,4 +43,11 @@ export const debuggerPlay = () => dispatch => {
 
 export const debuggerPause = () => dispatch => {
     dispatch({ type: DEBUGGER_PAUSE });
+};
+
+export const debuggerSelectEvent = event => dispatch => {
+    dispatch({
+        type: DEBUGGER_EVENT_SELECTED,
+        payload: event
+    });
 };
