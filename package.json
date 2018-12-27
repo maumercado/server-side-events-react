@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "start:dev": "concurrently \"npm run server:dev\" \"npm run client\"",
-        "test": "NODE_ENV=test && jest --runInBand",
+        "install-all": "npm install && cd client && npm install && npm run build && cd ../",
+        "test": "NODE_ENV=test && jest --runInBand && cd client && npm run test && cd ../",
         "client": "node start_client",
         "server:dev": "nodemon --inspect index.js --watch ./api",
         "server": "node index.js",
