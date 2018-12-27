@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
+const fs = require("fs");
 const { config } = require("../../config");
 
 const startServer = () => {
@@ -15,6 +17,30 @@ const startServer = () => {
 
     // Set CORS
     api.use(cors());
+
+    /**
+     * REACT app set up code
+     */
+
+    api.engine("html", (filePath, options, callback) => {
+        fs.readFile(filePath, (err, content) => {
+            if (err) {
+                return callback(err);
+            }
+            // this is an extremely simple template engine
+            const rendered = content.toString().replace("{{{config}}}", JSON.stringify(options.config));
+            return callback(null, rendered);
+        });
+    });
+
+    api.set("views", path.join(__dirname, "../../client/build"));
+    api.set("view engine", "html");
+
+    api.get("/", (req, res) => {
+        res.render("index", { config: config.client });
+    });
+
+    api.use(express.static(path.join(__dirname, "../../client/build")));
 
     /**
      * Maintenance Route for heartbeat

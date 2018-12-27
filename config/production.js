@@ -15,6 +15,6 @@ module.exports = {
         }
     },
     client: {
-        server: process.env.SERVER_URL || `localhost:${port}`
+        server: process.env.SERVER_URL || `http://localhost:${port}`
     }
 };
