@@ -9,7 +9,7 @@ class SearchBar extends Component {
 
     onPauseLive = value => {
         const { onPlay, onPause } = this.props;
-        console.log(value);
+
         if (value === "live") {
             onPlay();
         }

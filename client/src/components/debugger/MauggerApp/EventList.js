@@ -16,10 +16,11 @@ class EventList extends PureComponent {
                 flex="1"
                 flexGrow={0}
                 flexShrink={0}
-                flexBasis={640}
+                flexBasis={660}
+                backgroundColor="#ffffff"
             >
                 <Table>
-                    <Table.Body height={640}>{eventResults}</Table.Body>
+                    <Table.Body height={660}>{eventResults}</Table.Body>
                 </Table>
             </Pane>
         );
