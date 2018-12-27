@@ -12,7 +12,7 @@ export default class NoEvents extends PureComponent {
                 textAlign="center"
             >
                 <div>
-                    <Heading>No Recent Events Seen</Heading>
+                    <Heading>No Events Seen</Heading>
                 </div>
             </Pane>
         );
