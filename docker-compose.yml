@@ -1,0 +1,29 @@
+redis:
+    image: redis
+    ports:
+        - "6379:6379"
+
+stream:
+    image: segment/fake-event-stream
+    environment:
+        - REDIS_HOST=redis
+        - REDIS_PORT=6379
+        - REDIS_CHANNEL=events
+        - EVENTS_PER_SECOND=1
+    links:
+        - redis
+
+debugger:
+    image: maumercado/debugger
+    ports:
+        - "4000:4000"
+    environment:
+        - REDIS_HOST=redis
+        - REDIS_PORT=6379
+        - REDIS_CHANNEL=events
+        - SERVER_PORT=4000
+        - LOG_LEVEL=debug
+        - SERVER_URL=http://0.0.0.0:4000
+        - NODE_ENV="production"
+    links:
+        - redis
