@@ -1,18 +1,29 @@
 import React, { PureComponent } from "react";
-import { Table } from "evergreen-ui";
+import { Table, Pane } from "evergreen-ui";
 import EventListItem from "./EventListItem";
-class List extends PureComponent {
+class EventList extends PureComponent {
     render() {
-        const eventResults = this.props.events.map((event, i) => {
-            return <EventListItem key={event.id} event={event} />;
+        const { onSelect, events } = this.props;
+
+        const eventResults = events.map((event, i) => {
+            return <EventListItem key={event.id} event={event} onEventSelect={onSelect} />;
         });
 
         return (
-            <Table>
-                <Table.Body height={640}>{eventResults}</Table.Body>
-            </Table>
+            <Pane
+                flexDirection="column"
+                display="flex"
+                flex="1"
+                flexGrow={0}
+                flexShrink={0}
+                flexBasis={640}
+            >
+                <Table>
+                    <Table.Body height={640}>{eventResults}</Table.Body>
+                </Table>
+            </Pane>
         );
     }
 }
 
-export default List;
+export default EventList;

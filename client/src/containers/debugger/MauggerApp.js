@@ -55,6 +55,14 @@ class MauggerApp extends Component {
         this.props.debuggerPlay();
     };
 
+    onEventSelect = newEvent => {
+        if (newEvent === this.props.selectedEvent) {
+            this.props.debuggerSelectEvent(null);
+        } else {
+            this.props.debuggerSelectEvent(newEvent);
+        }
+    };
+
     /**
      * Custom Render Methods and Render
      */
@@ -76,10 +84,12 @@ class MauggerApp extends Component {
                 <Maugger
                     events={this.props.events}
                     eventsCount={this.props.eventsCount}
+                    selectedEvent={this.props.selectedEvent}
                     handleSearch={this.handleSearch}
                     onPause={this.onPause}
                     onPlay={this.onPlay}
                     isPaused={this.props.isPaused}
+                    onEventSelect={this.onEventSelect}
                 />
             </Pane>
         );
@@ -87,10 +97,17 @@ class MauggerApp extends Component {
 }
 
 const mapStateToProps = state => {
-    const { isLoading, events, isError, searchTerm, isPaused } = state.debugger;
+    const { isLoading, events, isError, searchTerm, isPaused, selectedEvent } = state.debugger;
     const filteredEvents = filterEvents(events, searchTerm);
 
-    return { isLoading, events: filteredEvents, isError, eventsCount: events.length, isPaused };
+    return {
+        isLoading,
+        events: filteredEvents,
+        isError,
+        eventsCount: events.length,
+        isPaused,
+        selectedEvent
+    };
 };
 
 export default connect(

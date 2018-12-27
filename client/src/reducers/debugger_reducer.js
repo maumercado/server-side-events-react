@@ -5,7 +5,8 @@ import {
     DEBUGGER_PAUSE,
     DEBUGGER_INIT_ERROR,
     DEBUGGER_SEARCH,
-    DEBUGGER_RESUME
+    DEBUGGER_RESUME,
+    DEBUGGER_EVENT_SELECTED
 } from "../actions/types";
 
 const initialState = {
@@ -13,7 +14,8 @@ const initialState = {
     isPaused: false,
     isError: false,
     isLoading: true,
-    searchTerm: ""
+    searchTerm: "",
+    selectedEvent: null
 };
 
 const MAX_EVENTS_TO_SHOW = 100;
@@ -77,6 +79,13 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 searchTerm: action.payload
+            };
+        }
+
+        case DEBUGGER_EVENT_SELECTED: {
+            return {
+                ...state,
+                selectedEvent: action.payload
             };
         }
 
