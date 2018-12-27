@@ -1,4 +1,4 @@
-import { Alert, Spinner } from "evergreen-ui";
+import { Alert, Spinner, Pane } from "evergreen-ui";
 import normalize from "normalize-for-search";
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -59,25 +59,29 @@ class MauggerApp extends Component {
      * Custom Render Methods and Render
      */
     renderError = () => {
-        return <Alert intent="danger" title="Hrm something is wrong, check your connections!" />;
+        if (this.props.isError) {
+            return (
+                <Alert intent="danger" title="Hrm something is wrong, check your connections!" />
+            );
+        }
     };
 
     render() {
-        if (this.props.isError) {
-            return this.renderError();
-        }
         if (this.props.isLoading) {
             return <Spinner />;
         }
         return (
-            <Maugger
-                events={this.props.events}
-                eventsCount={this.props.eventsCount}
-                handleSearch={this.handleSearch}
-                onPause={this.onPause}
-                onPlay={this.onPlay}
-                isPaused={this.props.isPaused}
-            />
+            <Pane>
+                {this.renderError()}
+                <Maugger
+                    events={this.props.events}
+                    eventsCount={this.props.eventsCount}
+                    handleSearch={this.handleSearch}
+                    onPause={this.onPause}
+                    onPlay={this.onPlay}
+                    isPaused={this.props.isPaused}
+                />
+            </Pane>
         );
     }
 }
