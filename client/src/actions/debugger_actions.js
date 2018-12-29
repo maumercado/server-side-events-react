@@ -8,29 +8,29 @@ import {
     DEBUGGER_EVENT_SELECTED
 } from "./types";
 
-let sse = null;
+window.sse = null;
 
 export const debuggerInit = () => dispatch => {
-    if (sse) {
+    if (window.sse) {
         throw new Error("SSE connection already exists?");
     }
 
-    sse = new EventSource(`${window.config.server}/v1/stream`);
+    window.sse = new EventSource(`${window.config.server}/v1/stream`);
 
-    sse.addEventListener("event", e => {
+    window.sse.addEventListener("event", e => {
         dispatch({
             payload: e.data,
             type: DEBUGGER_RECEIVED_EVENT
         });
     });
 
-    sse.addEventListener("loaded", e => {
+    window.sse.addEventListener("loaded", e => {
         dispatch({
             type: DEBUGGER_LOADED
         });
     });
 
-    sse.addEventListener("error", () => dispatch({ type: DEBUGGER_INIT_ERROR }));
+    window.sse.addEventListener("error", () => dispatch({ type: DEBUGGER_INIT_ERROR }));
 };
 
 export const debuggerSearch = query => dispatch => {
