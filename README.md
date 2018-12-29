@@ -4,7 +4,10 @@ A simple clone of Segment's event debugger.
 
 ## TODO:
 
--   Add meaninful automated tests for both client and server
+There is an existing set of tests for reducers and actions for the client application, however adding more tests,
+specially integration tests should be more meaningful.
+
+-   Add more automated tests for both client and server
 
 ## Installation and Getting started
 
@@ -12,7 +15,7 @@ Install bunyan with `npm install -g bunyan` so you can pipe logs on the terminal
 
 #### Installation and execution with Docker
 
-You can download the image for this project by simply pulling `maumercado/debugger`, note that the port exposed is 4000.
+You can download the image for this project by simply doing `docker pull maumercado/debugger`, note that the port exposed is 4000.
 
 You can also git clone this project and simply run `docker-compose up` from the root directory, as you can see the docker-compose.yml file contains 3 different images, a redis image which is used as a pub/sub for "events", an event creator or stream image, which is the publisher of "events", and of course the debugger which acts as the subscriber for receiving "events".
 
