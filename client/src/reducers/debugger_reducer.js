@@ -9,7 +9,7 @@ import {
     DEBUGGER_EVENT_SELECTED
 } from "../actions/types";
 
-const initialState = {
+export const initialState = {
     events: [],
     isPaused: false,
     isError: false,
