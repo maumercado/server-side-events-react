@@ -45,6 +45,7 @@ class Event {
                 }
             })
             .filter(item => item !== undefined && item.length > 0);
+        this.normalValues = this.normalValues.join(" ");
         this.description = eventTitle(this.data);
     }
 }
