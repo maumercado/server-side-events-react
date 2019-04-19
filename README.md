@@ -22,7 +22,7 @@ You can also git clone this project and simply run `docker-compose up` from the 
 #### Manual Installation and execution
 
 ```
-git clone git@github.com/segment-interviews/debugger-maumercado.git
+git clone git@github.com/maumercado/server-side-events-react.git
 cd debugger-maumercado
 npm install-all
 npm run server
