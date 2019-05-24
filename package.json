@@ -51,7 +51,7 @@
         "moment": "^2.23.0",
         "nested-object-values": "^1.0.0",
         "nodemon": "^1.18.9",
-        "normalize-for-search": "^2.0.1",
+        "normalize-for-search": "^2.1.0",
         "redis": "^2.8.0"
     },
     "devDependencies": {
